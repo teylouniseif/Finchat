@@ -2,4 +2,4 @@ pip install -r requirements.txt
 
 run main.py file
 
-To add additional information sources, edit db.py file to add other url endpoints
+To add additional fmp api information sources, edit db.py file to add other url endpoints

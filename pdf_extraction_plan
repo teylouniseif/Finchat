@@ -1,0 +1,65 @@
+Algorithmic steps to extract information from PDF
+
+1)  Use OCR library to convert PDF into corresponding text(EasyOCR is a good choice)
+
+2)  Use algorithm to attach sections of text to corresponding title/subtitle, by 
+
+    a-using regex division using separators like \n and \t
+
+    or
+
+    b-using spatial coordinates to relate titles to their sections.
+    Libraries like PyMuPDF offer spatial information about text blocks
+
+    Regardles of the two approaches, given the following layout:
+
+    ###
+    Note 2. Summary of Significant Accounting Policies
+
+    Concentrations of Risks
+
+    The Company’s revenue is reliant on its customers utilizing Internet-based services. These services can be prone to rapid changes in technology and government regulation. If the Company were unable to keep pace with customers’
+    ###
+
+    we want to be able to identify 'Note 2. Summary of Significant Accounting Policies' as title of the section and 'Concentrations of Risks' as subtitle of the section.
+
+3)  Once we habe title/subtitle mapping for each block of text, implement a two step vector based storage process.
+    First vector collection contains a mapping of title/subtitle to an ID. Said ID is included as metadata of second collection where non title sections are stored. Second collection similarity searchs are filtered by metadata acquired during first collection search
+
+    Collection 1:
+
+    page_content: 
+        'Title: Note 2. Summary of Significant Accounting Policies
+        Subtitle: Concentrations of Risks',
+    metadata: {
+        id: '2.1'
+    }
+
+    Collection 2:
+
+    page_content: 
+        'The Company’s revenue is reliant on its customers utilizing Internet-based services. These services can be prone to rapid changes in technology and government regulation. If the Company were unable to keep pace with customers'
+    metadata: {
+        id: '2.1'
+    }
+
+    The reason for this is we want to have a way to use the structure of the PDF wisely, so we take advantage of the text formatting,
+    by identifying whole sections to overarching title, but we do want to calculate similarity scores on sections without the title included, in order to accurately filter useful information.
+
+    Chunk sections to desired size, and fill the vector stores in the manner explained above.
+
+    Note: A simpler solution would be to include in one collection for each text section record the title/subtitle, but this would weaken the similarity search distinguishing performance and render the search less precise
+
+    When querying, we use as queries questions defining the information that we desire to extract.
+
+    Note: if we are thinking of doing on the fly document processing in a monolithic process, same logic applies, simply do a two step similarity search first on the title/subtitles then on the text chunks labeled under those title/subtitles.
+
+4)  At this point for every query, we have some text of high relevance. Use an encoder type model
+    with Question Answering head to extract precise answer to queries from said text. This avoids the issue of hallucination
+    and ensures quality of answers. Models like Roberta are a good starting point.
+
+    A decoder type model can be used also, but the traceability of the output becomes much harder to guarantee.
+    Another advantage of encoder models is they are much easier to finetune for specific purposes due to their smaller size.
+
+
+
