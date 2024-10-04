@@ -23,6 +23,7 @@ class VectorDB():
     def search_db(key, *args):
         embedding_vector = OpenAIEmbeddings(api_key=api_key).embed_query(key)
         docs = VectorDB.db.similarity_search_by_vector(embedding_vector, *args)
+        return docs
     
 
 
@@ -43,5 +44,3 @@ VectorDB.insert_into_db(
         'https://financialmodelingprep.com/api/v3/earning_call_transcript/{symbol}?year=2020&quarter=2',
     ])}
 )
-
-VectorDB.search_db('income-statement')
