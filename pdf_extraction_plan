@@ -58,7 +58,7 @@ Algorithmic steps to extract information from PDF
     with Question Answering head to extract precise answer to queries from said text. This avoids the issue of hallucination
     and ensures quality of answers. Models like Roberta are a good starting point.
 
-    A decoder type model can be used also, but the traceability of the output becomes much harder to guarantee.
+    A decoder type model can be used also, but the traceability of the output harder to guarantee.
     Another advantage of encoder models is they are much easier to finetune for specific purposes due to their smaller size.
 
 
