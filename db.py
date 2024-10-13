@@ -33,14 +33,53 @@ class VectorDB():
 vector_db = VectorDB()
 VectorDB.insert_into_db(
     'https://financialmodelingprep.com/api/v3/income-statement/',
-    metadata = {'examples': str([
-        'https://financialmodelingprep.com/api/v3/income-statement/{symbol}?period=annual',
-        'https://financialmodelingprep.com/api/v3/income-statement/{symbol}?period=quarter'    
-    ])}
+    metadata = {
+        'examples': str([
+            'https://financialmodelingprep.com/api/v3/income-statement/{symbol}?period=annual',
+            'https://financialmodelingprep.com/api/v3/income-statement/{symbol}?period=quarter'    
+        ])
+    }
 )
 VectorDB.insert_into_db(
     'https://financialmodelingprep.com/api/v3/earning_call_transcript/',
-    metadata = {'examples': str([
-        'https://financialmodelingprep.com/api/v3/earning_call_transcript/{symbol}?year=2020&quarter=2',
-    ])}
+    metadata = {
+        'examples': str([
+            'https://financialmodelingprep.com/api/v3/earning_call_transcript/{symbol}?year=2020&quarter=2',
+        ])
+    }
 )
+VectorDB.insert_into_db(
+    'https://financialmodelingprep.com/api/v3/balance-sheet-statement/',
+    metadata = {
+        'examples': str([
+            'https://financialmodelingprep.com/api/v3/balance-sheet-statement/{symbol}?period=annual',
+            'https://financialmodelingprep.com/api/v3/balance-sheet-statement/{symbol}?period=quarter'
+        ])
+    }
+)
+VectorDB.insert_into_db(
+    'https://financialmodelingprep.com/api/v3/cash-flow-statement/',
+    metadata = {
+        'examples': str([
+            'https://financialmodelingprep.com/api/v3/cash-flow-statement/{symbol}?period=annual',
+            'https://financialmodelingprep.com/api/v3/cash-flow-statement/{symbol}?period=quarter'
+        ])
+    }
+)
+VectorDB.insert_into_db(
+    'https://financialmodelingprep.com/api/v3/stock_news',
+    metadata = {
+        'examples': str([
+            'https://financialmodelingprep.com/api/v3/stock_news?tickers={symbol1},{symbol2}&from=2024-01-01&to=2024-03-01',
+        ])
+    }
+)
+VectorDB.insert_into_db(
+    'https://financialmodelingprep.com/api/v3/press-releases/',
+    metadata = {
+        'examples': str([
+            'https://financialmodelingprep.com/api/v3/press-releases/{symbol}?page=0',
+        ])
+    }
+)
+

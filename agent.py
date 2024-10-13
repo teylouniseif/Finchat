@@ -16,23 +16,24 @@ llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, api_key=api_key)
 
 class Agent():
     
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            (
-                "system",
-                f"""You are an assistant whose  objective is to detect
-                and extract company or corporate entities' names from the user input,
-                retrieve base urls relevant to user question, determine time ranges or variables based on user question, build final urls based on human question, url examples and time ranges determined,
-                and then summarize information provided by api calls to answer question.
-                If no precise date is specified in user question, consider the date as the current one: {datetime.datetime.now()}
-                """,
-            ),
-            ("human", "{input}"),
-            ("placeholder", "{agent_scratchpad}"),
-        ]
-    )
-    
     def __init__(self):
+        prompt = ChatPromptTemplate.from_messages(
+            [
+                (
+                    "system",
+                    f"""You are an assistant whose  objective is to detect
+                    and extract company or corporate entities' names from the user input,
+                    retrieve base urls relevant to user question, determine time ranges or variables based on user question, build final urls based on human question, url examples and time ranges determined,
+                    and then summarize information provided by {FMPAPITool.get_name()} tool calls to answer question.
+                    Ensure ALL BUILT URLS are used to call {FMPAPITool.get_name()} tool.
+                    If the {FMPAPITool.get_name()} tool call fails to return data for any of the urls, REFORMULATE THE USER QUESTION AND CALL THE TOOL AGAIN WITH THE NEW QUESTION.
+                    If no precise date is specified in user question, consider the date as the current one: {datetime.datetime.now()}
+                    """,
+                ),
+                ("human", "{input}"),
+                ("placeholder", "{agent_scratchpad}"),
+            ]
+        )
         #create tool calling agent, and pass to it 
         # SymbolFetchTool to convert company names to symbols
         # DBtool to get relevant urls for retrieval augmentation
@@ -44,7 +45,7 @@ class Agent():
                 FMPAPITool(api_key=os.getenv("FMP_KEY"))
             ],
             llm=llm,
-            prompt=Agent.prompt,
+            prompt=prompt,
         )
         self.executor = AgentExecutor(
             agent=agent,
@@ -53,7 +54,8 @@ class Agent():
                 DBTool.get_tool(),
                 FMPAPITool(api_key=os.getenv("FMP_KEY"))
             ],
-            verbose=True
+            verbose=True,
+            max_iterations=6
         )
 
 
