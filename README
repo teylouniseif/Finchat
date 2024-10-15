@@ -5,3 +5,6 @@ Add FMP_KEY and OPENAI_KEY in dotenv file
 run main.py file
 
 To add additional fmp api information sources, edit db.py file to add other url endpoints
+
+
+tabula module needs JAVA installation
