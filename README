@@ -8,3 +8,14 @@ To add additional fmp api information sources, edit db.py file to add other url 
 
 
 tabula module needs JAVA installation
+
+
+
+Assignment 1: 
+
+Use OpenAI’s API as well as FMP’s financial data API to answer prompts like “Summarize Apple’s latest earnings call” or “What was Tesla’s revenue for Q2 2023?“. We have left this quite vague intentionally so you have freedom to work any way you best see fit. If you have any questions please don’t hesitate to reach out at any time.
+
+
+Assignment 2:
+
+How would you go about extracting financials, segments, and/or KPIs from a PDF? The expectations here is going from a raw PDF (see attached) to having the data in a standardized format. How would you go about doing that and ensuring very high accuracy. We don’t need any code and just expect a concise breakdown of the steps.
